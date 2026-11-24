@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hola mundo
-        run: python ../script/hello-world.py
+        run: python .github/script/hello-world.py
