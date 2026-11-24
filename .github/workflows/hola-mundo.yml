@@ -1,10 +1,13 @@
-name: hello-world
-on:
-  push:
-    branches: ["aprendiendo-github-actions"]
+name: Aprendiendo GitHub Actions
+run-name: ¡Estoy aprendiendo GitHub Actions!
+on: [push]
+
 jobs:
-  hello-world:
+  hola-mundo:
     runs-on: ubuntu-latest
     steps:
-      - name: Hola mundo
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Correr script
         run: python .github/script/hello-world.py
