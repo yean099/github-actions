@@ -1,0 +1,63 @@
+name: Triggers
+run-namee: Aprendo a consruir triggers
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**.py'
+  issues:
+    types:
+      - labeled
+  workflow_dispatch:
+    inputs:
+      leguaje_favorito:
+        description: 'Leguaje favorito'
+        required: true
+        default: 'Mundo'
+        type: choice
+        options:
+          - Mundo
+          - Python
+          - JavaScript
+      nombre:
+        description: 'Nombre'
+        required: true
+        type: string
+        default: 'Mundo'
+jobs:
+  hola-mundo-mundia:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Correr script
+        run: python .github/script/hello-world.py ${{ github.event.inputs.leguaje_favorito }} ${{ github.event.inputs.nombre }}
+      - name: Definir nombre
+        run: echo "NOMBRE=${{ github.event.inputs.nombre }}" >> $GITHUB_ENV
+      - name: Definir lenguaje
+        run: echo "LENGUAJE=${{ github.event.inputs.leguaje_favorito }}" >> $GITHUB_ENV
+      - name: Mostrar nombre y lenguaje
+        run: echo "Hola $NOMBRE, tu lenguaje favorito es $LENGUAJE"   
+      - name: correr script de python
+        run: python .github/script/hello-world.py $NOMBRE $LENGUAJE
+  Hola-mundo:
+    if: github.event_name != 'workflow_dispatch'   
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Correr script
+        run: python .github/script/hello-world.py ${{ github.event.inputs.leguaje_favorito }} ${{ github.event.inputs.nombre }}
+      - name: Definir nombre
+        run: echo "NOMBRE=${{ github.event.inputs.nombre }}" >> $GITHUB_ENV
+      - name: Definir lenguaje
+        run: echo "LENGUAJE=${{ github.event.inputs.leguaje_favorito }}" >> $GITHUB_ENV
+      - name: Mostrar nombre y lenguaje
+        run: echo "Hola $NOMBRE, tu lenguaje favorito es $LENGUAJE"   
+      - name: correr script de python
+        run: python .github/script/hello-world.py $NOMBRE $LENGUAJE 
